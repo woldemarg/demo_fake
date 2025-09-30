@@ -347,6 +347,89 @@ files = [
 ]
 
 [[package]]
+name = "dlib-bin"
+version = "19.24.6"
+description = "A toolkit for making real world machine learning and data analysis applications"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "dlib_bin-19.24.6-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:32b60473f3fa764f569425433f969561a519615f2b119111e15752e9ad3cebc9"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:04eef00c9ad3416ee63933884db7bf1b391f8dbce64ca1308d0dbbbddacde606"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-macosx_13_0_x86_64.whl", hash = "sha256:67b35357ee3e4e8a8bf45d001dc2e3d8cf84a9e1d2f18dc9896931c5ac39c353"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:680ab0ac99b90a235ec32067d10b7e51ab0cf6f219c2b9164618a6aaadd980be"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1bfd1fdfcab710ada7ef8aa0fd56abfa47972afc4644175f20815270f30aa339"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9d41262a231712b414aba0d0afba47b696e1508b62bde59456db906a9b58a62f"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:38342ca9910824240fab64ca208419983a9c2ef875ba88c9c1c3df1e8a9d737b"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:caa47efc5c7649200635c8b83a943a44383413ebb19e7bdf6767aaa890032573"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-musllinux_1_2_aarch64.whl", hash = "sha256:3cc036dc3a5aab907c61bc18bd522ddce5f29d995ac7b0e9447799c50f4899af"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-musllinux_1_2_x86_64.whl", hash = "sha256:f9f3398e2583c74bffab8af650b55a8dbb19c00ca95436f8278dd2d35c4a3cac"},
+    {file = "dlib_bin-19.24.6-cp310-cp310-win_amd64.whl", hash = "sha256:68247c2852b7e122575b7065f5ded7afe20b8700359cb85637db8422352f8b8c"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:36342fb811867f97c4d4d0aa022108a13637fe001d2d158b0feef6becfe7ad52"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:12785212f049f484d674f88eac4fa66c2111051d2a41946d1f10ba589bf374f4"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-macosx_13_0_x86_64.whl", hash = "sha256:a2027ecedad3e909be445b51dddbc7ed7a2b2635d7bd69e3d3dfef62aea43afc"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:065fdfdf5df0815ffd423aeaf0c33bd57a400f8de84e6954b8ba851fc98fa07d"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:709705ea37927e18bc7e6d5d9f2e58813da6a35a80762e4461d25b68ff8d68b8"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8c5c4029e0d6b020a6b81b842ac2b9781a1e507acd88f916436c6fdbd3267916"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:bfa8e9ffa7f9390296f40a9b1fe40e2d83cc5d001ec2b2997769d0787fdc0cc1"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:38d2eaaf95169b355975322ef56f39c503754954dd2bdb37e94342546b3f0a1c"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:bd22c68c390dd958c90e68f80923aac63f55d83c9e56d3ddbc1c2399cab7be2b"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:a133739dd7e07ea5b3589dfcd06dfb6df51b685254fbb4bdc9f3321b9c8bfdbe"},
+    {file = "dlib_bin-19.24.6-cp311-cp311-win_amd64.whl", hash = "sha256:96790a20117154727ce1d85e94e2642206b8ea07a237350db64f930e509b1d2a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:dbf9ea0974b3606af56fccfd97f00447cbf2248089a0e711f0be6b0b312ff10b"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:105da4b8eda3f79c35dee9ab565138fd25a6672a9097035804d5c1fe30287042"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-macosx_13_0_x86_64.whl", hash = "sha256:e78bb7f4f1a1605af7b118b6247341c003b9c254719229f4b495c89ce5fe395a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:c7303c9ad0c9cf6b4e283be3a3051209933a8b61daab6c77903803919e51928a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:351847922844b12ebd93ebf49e35670bece1c90198a75d3601b6ad156539492a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dae2aebfc4199de90947c3c6f2c3d6106ad9ad2b1f913021e8d81dc96c98325a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:1937152cb403e6953468a7687d9e3727a1a1ae92bd336145d45df3671526774c"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:6698be181b69df8121bebe8ff49ccddcd28021df0fefb9c942891d1f6a2e304f"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:3ed9b01a053d7745e6c288d36e3bc245db4117f5b7e75e4f0e0ee50d4c4f8b2a"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:93e0ac4747db8457430aefd3b63b5c41b513196f1391dfad0f3fdfaaf045fee8"},
+    {file = "dlib_bin-19.24.6-cp312-cp312-win_amd64.whl", hash = "sha256:17d3bd6ee4fdaf580d0d6482c283b467a896b08d35e583609aa6d113271330c7"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-macosx_13_0_x86_64.whl", hash = "sha256:d34563a35d357007924086f479f4ac1b377e2b300de57544d1c91150ccfd3071"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:398763c48797c0e7d8fac2cb3eff83994fcb832e9ef8a6b23d105d7f316e39d7"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4f3fdaa0d3021f1c9a1cee53f09fe3c6917acb91d20f12bccb203485a12e9f1e"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b616f411da0c09e69c2e9e0986c552835baf9ac520f5ea1d114af2ae9a03819e"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:3c1fd33cccff643aca85c320cb61e4deaad047edac4f4d93471b27c19c8c513e"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:09246e26cef28ad20ad83f98eb3ce50ccb2dfcd65d6df732962f041eb0a42032"},
+    {file = "dlib_bin-19.24.6-cp313-cp313-win_amd64.whl", hash = "sha256:ebdb231129b03a0096575e37d18c66b14919f7a875a2597ab067c5dc399f450b"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-macosx_13_0_x86_64.whl", hash = "sha256:e9ac38f4714a64e9c7ebe281d5788d39cab48b018c04c837365893b71c479259"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-macosx_14_0_arm64.whl", hash = "sha256:d439f40c2a3703faab1e9bf09eea8b00739feabc76008e717163a7e2a8fa5804"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:9d3f22c9ad95aaa7ec5505161773ab135a2cba1483d8b20a54e3e1fe35ad0db0"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8a67ad19133a0e2a077339767b1bac890a7d97cc009a3a15918be56421ac5724"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-musllinux_1_2_aarch64.whl", hash = "sha256:d61f41f8205d12a52c4aa9b2d70284159d069edab0d5bf87f0bd47440cb6549b"},
+    {file = "dlib_bin-19.24.6-cp313-cp313t-musllinux_1_2_x86_64.whl", hash = "sha256:24e7efed6e5f19ed504eedcdf6188b09ad61f0736078ea20b445c52593dd7c32"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:229554118aad85da777ff70375e3cca0e5f857e3d69a3930875d4d64982be947"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:61ad54f7b54a8ac0c741d49044eeadf3d921fc8949ad0a57841482e65b6c716a"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:db28a8a400a8f3f832de253449e44628092e813f05ecd37ad1b229e2c31a5f95"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-musllinux_1_1_aarch64.whl", hash = "sha256:e3aaaba24c8dbdbcce2ccf22a5b69f034d4b318aac44a5129b08fbdd0d94fa05"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-musllinux_1_1_x86_64.whl", hash = "sha256:1095d3ae03f98a8c61344b20eb8fbb9269b5b7c40038f9b23d2c5704ff7fcc63"},
+    {file = "dlib_bin-19.24.6-cp37-cp37m-win_amd64.whl", hash = "sha256:36d77f343c4e98f63fe46be105df606cb7ea2ac828625958f5f38a152dfb78ae"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:da301e93891a8769dd7a1371c34fbd5fff3b4ec2d36450ed938bf8ce813ca4b0"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:a46c9ac8d24be14f19b35de6cfdda34de9f407c7db02524be08766b123c12fd4"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-macosx_13_0_x86_64.whl", hash = "sha256:5685afeb011df2a14324c9b7cac15b2df605d3d17e8757c27e50f436eb4dc44f"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:930acdd75b58fd837a1b1df13904c91b02d058e2f253f13f8c724734c8605da6"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:83d6d7113771000a5abcf6b19a7b2c861179d4e4afc41b2c39cd0247152302f2"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-musllinux_1_1_aarch64.whl", hash = "sha256:7c70e8961ca3029f94d5163d43c7c2a25d671c6ff3cf550319190867a92643f3"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:50898a675ec70143f2a73dc99a50562c163ebf57839274eef9a665ccce77651e"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-musllinux_1_2_aarch64.whl", hash = "sha256:cd6d6169da3fbe0863246b3ef3162c5713469c9443fbf7f5c6fa2b4f2ec5258b"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-musllinux_1_2_x86_64.whl", hash = "sha256:734aa038942b57327914c11e9b74e613ebf45f250302d68ce6ff9327e34d9e1e"},
+    {file = "dlib_bin-19.24.6-cp38-cp38-win_amd64.whl", hash = "sha256:72e45d5a0406e86c44d4921635086bec9c3eb0d54a3710a8210aa4622e536d5a"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:03f09cdc3ab62164d20fc901f01fcf638d2e3db54f0eb1d33e7eac8b8ef350aa"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:35304144c465030d57b5db4523a01d092dff71e472ea345693784e94f0a71b9f"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-macosx_13_0_x86_64.whl", hash = "sha256:dbd3e5b50e81c38c02a00e5a8b40ed7f9f08aa74e7d8cf5967c26b43666aa65c"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-macosx_14_0_arm64.whl", hash = "sha256:4c324e2f7504dafabae6a01711d64ebafc917bb0e5cd8518705e474552464e38"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a8877f395468188b5df6dfb9ec4ed548b0e048fe5e5353e3715efbb18cb43366"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:136dc57843523e9454dac538f207d303cfda1d011e41c250c38582e9ee059ed6"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-musllinux_1_1_aarch64.whl", hash = "sha256:987ca55ce26af2efeb9c7803a88664f960a12720afbf9c4e286bed3a02559556"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:2ce4620f8028b8a70b5a53a542c2100cb54780ae2916407a11360fd6ae0a7301"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-musllinux_1_2_aarch64.whl", hash = "sha256:95721bb84024351d7f9ac435a9a076042bbce1ee5632e8045571c8dccd6ff262"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-musllinux_1_2_x86_64.whl", hash = "sha256:6e118375e8834fa719ef8478725e6a55a9b91796b66ec63b880c0ed71a977367"},
+    {file = "dlib_bin-19.24.6-cp39-cp39-win_amd64.whl", hash = "sha256:7f8bad36cb47d959fc912f289652123e9bc3718cdf9c55de46cb93dd889d7f9e"},
+]
+
+[[package]]
 name = "face-recognition"
 version = "1.3.0"
 description = "Recognize faces from Python or from the command line"
@@ -2738,4 +2821,4 @@ watchmedo = ["PyYAML (>=3.10)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "7e33d9348a496734450d82dafcf9789a069fd9c69f546c1f22a818b5dd153ba8"
+content-hash = "3477f17f41affb603a44e840579f76ccb35ab40a203cfe5318d68040fb8ca4fe"
