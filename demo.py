@@ -1,9 +1,10 @@
+import dlib
 import streamlit as st
 import cv2
 import numpy as np
 from PIL import Image
 import torch
-import torch.nn as nn
+from torch import nn
 import timm
 from torchvision import transforms
 import face_recognition
@@ -92,10 +93,17 @@ def draw_bbox(img_bgr):
     return cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
 
 
-def visualize_face_lime(explanation, face_rgb_uint8, pred_label, pred_prob,
-                        num_features=NUM_FEATURES, positive_only=False, alpha=0.5):
+def visualize_face_lime(
+    explanation,
+    face_rgb_uint8,
+    # pred_label,
+    # pred_prob,
+    num_features=NUM_FEATURES,
+    positive_only=False,
+    alpha=0.5
+):
     top_label = explanation.top_labels[0]
-    temp, mask = explanation.get_image_and_mask(
+    _, mask = explanation.get_image_and_mask(
         top_label,
         positive_only=positive_only,
         num_features=num_features,
@@ -123,6 +131,24 @@ def visualize_face_lime(explanation, face_rgb_uint8, pred_label, pred_prob,
     return final
 
 
+LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
+predictor = dlib.shape_predictor(LANDMARK_PATH)
+detector = dlib.get_frontal_face_detector()
+
+
+def draw_landmarks(img_bgr):
+    """Draw facial landmarks on the image"""
+    img_out = img_bgr.copy()
+    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
+    faces = detector(img_rgb, 1)  # detect faces
+    for face in faces:
+        shape = predictor(img_rgb, face)
+        for i in range(68):
+            x, y = shape.part(i).x, shape.part(i).y
+            cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
+    return cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
+
+
 # -----------------------------
 # STREAMLIT APP
 # -----------------------------
@@ -138,10 +164,13 @@ if uploaded_file:
     # Original with bounding box
     img_bbox = draw_bbox(img_bgr)
 
+    # Original with landmarks
+    img_landmarks = draw_landmarks(img_bgr)
+
     # Cropped face
     img_face = crop_ffpp_style(img_bgr)
 
-    # st.write("Generating LIME explanation...")
+    # LIME explanation
     explainer = lime_image.LimeImageExplainer()
     explanation = explainer.explain_instance(
         img_face, classifier_fn=batch_predict, top_labels=1,
@@ -155,12 +184,14 @@ if uploaded_file:
     class_label = "FAKE" if fake_prob > 0.5 else "REAL"
     st.markdown(f"**Prediction:** {class_label} ({fake_prob*100:.2f}%)")
 
-    # Visualize
+    # Visualize LIME
     img_overlay = visualize_face_lime(
         explanation, img_face, class_label, fake_prob)
 
     # Display side by side
-    st.markdown("**Original vs Cropped Face with LIME Explanation**")
-    col1, col2 = st.columns(2)
+    st.markdown(
+        "**Original vs Landmarks vs Cropped Face with LIME Explanation**")
+    col1, col2, col3 = st.columns(3)
     col1.image(img_bbox, caption="Original with Bounding Box")
-    col2.image(img_overlay, caption="Cropped Face with LIME Mask")
+    col2.image(img_landmarks, caption="Original with Landmarks")
+    col3.image(img_overlay, caption="Cropped Face with LIME Mask")
