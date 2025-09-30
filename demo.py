@@ -129,8 +129,8 @@ detector = dlib.get_frontal_face_detector()
 
 def add_landmarks(img_rgb):
     img_out = img_rgb.copy()
-    # faces = detector(img_rgb, 1)
-    faces = face_recognition.face_landmarks(img_rgb)
+    faces = detector(img_rgb, 1)
+    # faces = face_recognition.face_landmarks(img_rgb)
     for face in faces:
         shape = predictor(img_rgb, face)
         for i in range(68):
