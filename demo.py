@@ -1,4 +1,4 @@
-# import dlib
+import dlib
 import streamlit as st
 import cv2
 import numpy as np
@@ -17,7 +17,7 @@ from skimage.segmentation import mark_boundaries
 # -----------------------------
 WEIGHTS_PATH = "ffpp_c23.pth"
 IMG_SIZE = 299
-NUM_SAMPLES = 600
+NUM_SAMPLES = 800
 NUM_FEATURES = 15
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -122,9 +122,9 @@ def visualize_face_lime(explanation, face_rgb_uint8, alpha=0.5):
 
 
 # dlib landmarks
-# LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
-# predictor = dlib.shape_predictor(LANDMARK_PATH)
-# detector = dlib.get_frontal_face_detector()
+LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
+predictor = dlib.shape_predictor(LANDMARK_PATH)
+detector = dlib.get_frontal_face_detector()
 
 
 def add_landmarks(img_rgb):
@@ -132,13 +132,13 @@ def add_landmarks(img_rgb):
     # faces = detector(img_rgb, 1)
     faces = face_recognition.face_landmarks(img_rgb)
     for face in faces:
-        # shape = predictor(img_rgb, face)
-        # for i in range(68):
-        #     x, y = shape.part(i).x, shape.part(i).y
-        #     cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
-        for key, points in face.items():
-            for (x, y) in points:
-                cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
+        shape = predictor(img_rgb, face)
+        for i in range(68):
+            x, y = shape.part(i).x, shape.part(i).y
+            cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
+        # for key, points in face.items():
+        #     for (x, y) in points:
+        #         cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
     return img_out
 
 
