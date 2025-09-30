@@ -1,4 +1,4 @@
-import dlib
+# import dlib
 import streamlit as st
 import cv2
 import numpy as np
@@ -122,19 +122,23 @@ def visualize_face_lime(explanation, face_rgb_uint8, alpha=0.5):
 
 
 # dlib landmarks
-LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
-predictor = dlib.shape_predictor(LANDMARK_PATH)
-detector = dlib.get_frontal_face_detector()
+# LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
+# predictor = dlib.shape_predictor(LANDMARK_PATH)
+# detector = dlib.get_frontal_face_detector()
 
 
 def add_landmarks(img_rgb):
     img_out = img_rgb.copy()
-    faces = detector(img_rgb, 1)
+    # faces = detector(img_rgb, 1)
+    faces = face_recognition.face_landmarks(img_rgb)
     for face in faces:
-        shape = predictor(img_rgb, face)
-        for i in range(68):
-            x, y = shape.part(i).x, shape.part(i).y
-            cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
+        # shape = predictor(img_rgb, face)
+        # for i in range(68):
+        #     x, y = shape.part(i).x, shape.part(i).y
+        #     cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
+        for key, points in face.items():
+            for (x, y) in points:
+                cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
     return img_out
 
 
@@ -162,20 +166,22 @@ if uploaded_file:
     class_label = "FAKE" if fake_prob > 0.5 else "REAL"
     st.markdown(f"**Prediction:** {class_label} ({fake_prob*100:.2f}%)")
 
-    # LIME explanation
-    explainer = lime_image.LimeImageExplainer()
-    explanation = explainer.explain_instance(
-        img_face, classifier_fn=batch_predict,
-        top_labels=1, hide_color=0.5, num_samples=NUM_SAMPLES
-    )
-    st.success("✅ LIME explanation completed!")
+    with st.spinner(show_time=True):
+        # st.success("✅ LIME explanation completed!")
 
-    # Cropped + LIME + landmarks
-    img_overlay = visualize_face_lime(explanation, img_face)
-    img_with_landmarks = add_landmarks(img_overlay)
+        # LIME explanation
+        explainer = lime_image.LimeImageExplainer()
+        explanation = explainer.explain_instance(
+            img_face, classifier_fn=batch_predict,
+            top_labels=1, hide_color=0.5, num_samples=NUM_SAMPLES
+        )
 
-    # Show results
-    col1, col2 = st.columns(2)
-    col1.image(img_bbox, caption="Original with Bounding Box")
-    col2.image(img_with_landmarks,
-               caption="Cropped Face with LIME + Landmarks")
+        # Cropped + LIME + landmarks
+        img_overlay = visualize_face_lime(explanation, img_face)
+        img_with_landmarks = add_landmarks(img_overlay)
+
+        # Show results
+        col1, col2 = st.columns(2)
+        col1.image(img_bbox, caption="Original with Bounding Box")
+        col2.image(img_with_landmarks,
+                   caption="Cropped Face with LIME + Landmarks")
