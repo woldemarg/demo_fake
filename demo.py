@@ -17,7 +17,7 @@ from skimage.segmentation import mark_boundaries
 # -----------------------------
 WEIGHTS_PATH = "ffpp_c23.pth"
 IMG_SIZE = 299
-NUM_SAMPLES = 800
+NUM_SAMPLES = 600
 NUM_FEATURES = 15
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -68,14 +68,12 @@ def crop_ffpp_style(img_bgr, expand_ratio=0.3, target_size=IMG_SIZE):
     faces = face_recognition.face_locations(img_rgb)
     if not faces:
         return cv2.resize(img_rgb, (target_size, target_size))
-    # pick largest face
     areas = [(b-t)*(r-l) for (t, r, b, l) in faces]
     idx = areas.index(max(areas))
     t, r, b, l = faces[idx]
     h_exp, w_exp = int(expand_ratio*(b-t)), int(expand_ratio*(r-l))
     t, b = max(0, t-h_exp), min(img_bgr.shape[0], b+h_exp)
     l, r = max(0, l-w_exp), min(img_bgr.shape[1], r+w_exp)
-    # square crop centered on face
     cx, cy = l + (r-l)//2, t + (b-t)//2
     half = max(b-t, r-l)//2
     t_sq, b_sq = max(0, cy-half), min(img_bgr.shape[0], cy+half)
@@ -93,22 +91,23 @@ def draw_bbox(img_bgr):
     return cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
 
 
-def visualize_face_lime(
-    explanation,
-    face_rgb_uint8,
-    # pred_label,
-    # pred_prob,
-    num_features=NUM_FEATURES,
-    positive_only=False,
-    alpha=0.5
-):
-    top_label = explanation.top_labels[0]
-    _, mask = explanation.get_image_and_mask(
+def get_lime_mask(explanation, top_label, num_features=NUM_FEATURES, positive_only=False):
+    exp = list(explanation.local_exp[top_label])  # ensure sliceable
+    temp, mask = explanation.get_image_and_mask(
         top_label,
         positive_only=positive_only,
-        num_features=num_features,
+        negative_only=False,
+        num_features=min(NUM_FEATURES, len(exp)),
         hide_rest=False
     )
+    return temp, mask
+
+
+def visualize_face_lime(explanation, face_rgb_uint8, alpha=0.5):
+    top_label = explanation.top_labels[0]
+    _, mask = get_lime_mask(explanation, top_label,
+                            NUM_FEATURES, positive_only=False)
+
     mask_resized = cv2.resize(mask.astype(np.uint8),
                               (face_rgb_uint8.shape[1],
                                face_rgb_uint8.shape[0]),
@@ -119,34 +118,24 @@ def visualize_face_lime(
     overlay = (overlay*255).astype(np.uint8)
     boundaries = mark_boundaries(face_rgb_uint8/255.0, mask_resized)
     boundaries = (boundaries*255).astype(np.uint8)
-    final = cv2.addWeighted(overlay, 0.7, boundaries, 0.3, 0)
-
-    # Add text
-    # h, w = final.shape[:2]
-    # font_scale = max(0.5, w/600)
-    # cv2.putText(final, f"{pred_label} ({pred_prob*100:.2f}%)",
-    #             (10, int(30*font_scale)), cv2.FONT_HERSHEY_SIMPLEX,
-    #             font_scale, (0, 255, 0), 2, cv2.LINE_AA)
-
-    return final
+    return cv2.addWeighted(overlay, 0.7, boundaries, 0.3, 0)
 
 
+# dlib landmarks
 LANDMARK_PATH = "shape_predictor_68_face_landmarks.dat"
 predictor = dlib.shape_predictor(LANDMARK_PATH)
 detector = dlib.get_frontal_face_detector()
 
 
-def draw_landmarks(img_bgr):
-    """Draw facial landmarks on the image"""
-    img_out = img_bgr.copy()
-    img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-    faces = detector(img_rgb, 1)  # detect faces
+def add_landmarks(img_rgb):
+    img_out = img_rgb.copy()
+    faces = detector(img_rgb, 1)
     for face in faces:
         shape = predictor(img_rgb, face)
         for i in range(68):
             x, y = shape.part(i).x, shape.part(i).y
             cv2.circle(img_out, (x, y), 2, (0, 0, 255), -1)
-    return cv2.cvtColor(img_out, cv2.COLOR_BGR2RGB)
+    return img_out
 
 
 # -----------------------------
@@ -164,19 +153,8 @@ if uploaded_file:
     # Original with bounding box
     img_bbox = draw_bbox(img_bgr)
 
-    # Original with landmarks
-    img_landmarks = draw_landmarks(img_bgr)
-
     # Cropped face
     img_face = crop_ffpp_style(img_bgr)
-
-    # LIME explanation
-    explainer = lime_image.LimeImageExplainer()
-    explanation = explainer.explain_instance(
-        img_face, classifier_fn=batch_predict, top_labels=1,
-        hide_color=0.5, num_samples=NUM_SAMPLES
-    )
-    st.success("✅ LIME explanation completed!")
 
     # Prediction
     pred_probs = batch_predict(np.expand_dims(img_face, 0))
@@ -184,14 +162,20 @@ if uploaded_file:
     class_label = "FAKE" if fake_prob > 0.5 else "REAL"
     st.markdown(f"**Prediction:** {class_label} ({fake_prob*100:.2f}%)")
 
-    # Visualize LIME
-    img_overlay = visualize_face_lime(
-        explanation, img_face, class_label, fake_prob)
+    # LIME explanation
+    explainer = lime_image.LimeImageExplainer()
+    explanation = explainer.explain_instance(
+        img_face, classifier_fn=batch_predict,
+        top_labels=1, hide_color=0.5, num_samples=NUM_SAMPLES
+    )
+    st.success("✅ LIME explanation completed!")
 
-    # Display side by side
-    st.markdown(
-        "**Original vs Landmarks vs Cropped Face with LIME Explanation**")
-    col1, col2, col3 = st.columns(3)
+    # Cropped + LIME + landmarks
+    img_overlay = visualize_face_lime(explanation, img_face)
+    img_with_landmarks = add_landmarks(img_overlay)
+
+    # Show results
+    col1, col2 = st.columns(2)
     col1.image(img_bbox, caption="Original with Bounding Box")
-    col2.image(img_landmarks, caption="Original with Landmarks")
-    col3.image(img_overlay, caption="Cropped Face with LIME Mask")
+    col2.image(img_with_landmarks,
+               caption="Cropped Face with LIME + Landmarks")
